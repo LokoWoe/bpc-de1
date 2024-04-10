@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Wed Apr 10 12:27:11 2024
+# Process ID: 8260
+# Current directory: C:/Users/247096/Documents/tone_generator/bpc-de1/tone_generator/tone_generator.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source C:/Users/247096/Documents/tone_generator/bpc-de1/tone_generator/tone_generator.sim/sim_1/behav/xsim/xsim.dir/clock_enable_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/Users/247096/Documents/tone_generator/bpc-de1/tone_generator/tone_generator.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: C:/Users/247096/Documents/tone_generator/bpc-de1/tone_generator/tone_generator.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/247096/Documents/tone_generator/bpc-de1/tone_generator/tone_generator.sim/sim_1/behav/xsim/xsim.dir/clock_enable_tb_behav/webtalk/xsim_webtalk.tcl -notrace
