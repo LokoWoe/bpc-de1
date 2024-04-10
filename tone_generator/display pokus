@@ -1,0 +1,105 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 04/10/2024 11:33:42 AM
+-- Design Name: 
+-- Module Name: seg_switch - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity seg_switch is
+    Port ( 
+           CA : out STD_LOGIC;
+           CB : out STD_LOGIC;
+           CC : out STD_LOGIC;
+           CD : out STD_LOGIC;
+           CE : out STD_LOGIC;
+           CF : out STD_LOGIC;
+           CG : out STD_LOGIC;
+           DP : out STD_LOGIC;
+           count : in STD_LOGIC;
+           BTNC : in STD_LOGIC;
+           CLK100MHZ : in STD_LOGIC;
+           AN : out STD_LOGIC_VECTOR (7 downto 0));
+end seg_switch;
+
+architecture Behavioral of seg_switch is
+    
+    component clock_enable is
+        generic (
+            PERIOD : integer
+            );
+    Port ( clk : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           pulse : out STD_LOGIC);
+    end component;
+    
+    component simple_counter is 
+        Port (  clk : in STD_LOGIC;
+                en : in STD_LOGIC;
+                count : out natural range 0 to 4);
+    end component;
+    
+    signal active_anode : natural range 0 to 4 := 0;
+    signal sig_pulse : STD_LOGIC;
+begin
+    hodiny : clock_enable
+            generic map(
+                    PERIOD => 100_000)
+            
+            port map(
+                    rst => BTNC,
+                    clk => CLK100MHZ,
+                    pulse => sig_pulse);
+    
+    
+    counter : simple_counter 
+            port map(
+                    clk => sig_pulse,
+                    en => BTNC,
+                    count => active_anode
+                    );
+    
+    process(active_anode)
+        begin
+        case active_anode is
+            when 0 => AN <= b"1111_0111";
+            when 1 => AN <= b"1111_1011";
+            when 2 => AN <= b"1111_1101";
+            when 3 => AN <= b"1111_1110";
+            when others => AN <= b"1111_1111";
+        end case;
+        end process;
+           CA <= '0';
+           CB <= '0';
+           CC <= '0';
+           CD <= '0';
+           CE <= '0';
+           CF <= '0';
+           CG <= '0';
+           DP <= '1';
+end Behavioral;
