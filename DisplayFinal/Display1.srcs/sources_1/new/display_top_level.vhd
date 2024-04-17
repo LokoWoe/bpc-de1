@@ -18,13 +18,16 @@ entity top is
         AN        : out   std_logic_vector(7 downto 0);  
         BTNC      : in    std_logic;
         BTNU      : in    std_logic; 
-        BTND      : in    std_logic                                            
+        BTND      : in    std_logic;
+        PWM_OUT   : out   std_logic                                            
     );
 end entity top;
 
 architecture behavioral of top is
     
     signal UP : std_logic;
+    
+    signal duty : std_logic_vector(7 downto 0);
     
     signal DOWN : std_logic;
     
@@ -71,7 +74,16 @@ architecture behavioral of top is
                    rst : in STD_LOGIC;
                    pulse : out STD_LOGIC);
         end component clock_enable;
-
+    
+    component PWM is
+           Port (
+        clk : in STD_LOGIC;  
+        rst : in STD_LOGIC;  
+        pwm_out : out STD_LOGIC;  
+        duty_cycle : in STD_LOGIC_VECTOR(7 downto 0)
+    );
+    end component;       
+    
 begin
     frekvence : process (frequency) is
     begin
@@ -102,6 +114,8 @@ begin
     frequency_100   <= (frequency mod 1000) / 100;
     frequency_10    <= (frequency mod 100) / 10;
     frequency_1     <= (frequency mod 10);
+    
+    duty <= ("00001000");
     
     bounce : clock_enable
         generic map(
@@ -153,5 +167,13 @@ begin
                     clean => DOWN);
     
     AN(7 downto 4) <= b"1111";
-
+    
+    PWMko : PWM
+        port map(
+                    clk => CLK100MHZ,
+                    rst => BTNC,
+                    duty_cycle => duty,
+                    pwm_out => PWM_OUT
+               );     
+    
 end architecture behavioral;
