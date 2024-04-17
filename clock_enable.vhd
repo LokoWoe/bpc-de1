@@ -29,9 +29,9 @@ begin
                 pulse_toggle <= '0';               
 
             elsif (btn_inc = '1') then
-                period <= period - 50000000;
+                period <= period + 25000000;
             elsif (btn_dec = '1') then
-                period <= period + 50000000;
+                period <= period - 25000000;
             
             else
                 if (sig_count = (PERIOD - 1)) then
